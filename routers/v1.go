@@ -9,7 +9,7 @@ import (
 
 
 func SetupV1Routes(router *gin.Engine) {
-	v1 := router.Group("/api/v1")
+	v1 := router.Group("/api/v1/")
 	
 	v1.GET("/characters", func(c *gin.Context) {
 		response, err := handlers.GetCharacter(c)
@@ -20,9 +20,10 @@ func SetupV1Routes(router *gin.Engine) {
 		c.JSON(http.StatusOK, response)
 	}) 
 	
-	 
+	v1.GET("/favorites", handlers.GetFavorites)
+	
 	v1.POST("/favorites", func(context *gin.Context) {
-    handlers.AddFavorite(context) 
+    handlers.AddFavorites(context) 
   })
 	
 }
