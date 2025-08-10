@@ -1,5 +1,21 @@
 package models
 
+type Transformations struct {
+	ID          int         `json:"id"`
+	Name        string      `json:"name"`
+	Image       string      `json:"image"`
+	Ki          string      `json:"ki"`
+	DeletedAt   interface{} `json:"deletedAt"`
+}
+
+type OriginPlanet struct {
+	ID          int         `json:"id"`
+	Name        string      `json:"name"`
+	IsDestroyed bool        `json:"isDestroyed"`
+	Description string      `json:"description"`
+	Image       string      `json:"image"`
+	DeletedAt   interface{} `json:"deletedAt"`
+}
 
 type Character struct {
 	ID          int         `json:"id"`
@@ -12,6 +28,12 @@ type Character struct {
 	Image       string      `json:"image"`
 	Affiliation string      `json:"affiliation"`
 	DeletedAt   interface{} `json:"deletedAt"`
+}
+
+type CharacterById struct {
+	Character `json:",inline"`
+	OriginPlanet    OriginPlanet      `json:"originPlanet"`
+	Transformations []Transformations `json:"transformations"`
 }
 
 
@@ -32,7 +54,7 @@ type Link struct {
 
 type HttpResponse struct{
 	Items []Character `json:"items"`
-	MetaData MetaData `json:"metaData"`
+	MetaData MetaData `json:"meta"`
 	Links Link `json:"links"`
 }
 

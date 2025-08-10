@@ -19,6 +19,15 @@ func SetupV1Routes(router *gin.Engine) {
 		}
 		c.JSON(http.StatusOK, response)
 	}) 
+
+	v1.GET("/characters/:id", func(c *gin.Context) {
+		response, err := handlers.GetCharacterById(c)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch character by id"})
+			return
+		}
+		c.JSON(http.StatusOK, response)
+	})
 	
 	v1.GET("/favorites", handlers.GetFavorites)
 	

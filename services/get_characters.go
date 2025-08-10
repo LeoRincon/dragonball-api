@@ -36,3 +36,32 @@ func GetCharacter(limit int, page int) (models.HttpResponse, error){
 
 	return response, nil
 }
+
+
+func GetCharacterById(id string) (models.CharacterById, error) {
+	client := &http.Client{
+		Timeout: 15 * time.Second,
+	}
+
+	resp, err := client.Get("https://dragonball-api.com/api/characters/" + id)
+
+	if err != nil {
+		return models.CharacterById{}, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+
+	if err != nil {
+		return models.CharacterById{}, err
+	}
+
+	var response models.CharacterById
+
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return models.CharacterById{}, err
+	}
+
+	return response, nil
+}

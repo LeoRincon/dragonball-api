@@ -32,3 +32,13 @@ func GetCharacter(c *gin.Context) (models.Response, error) {
 
 	return resp, nil
 }
+
+func GetCharacterById(c *gin.Context) (models.CharacterById, error) {
+	id := c.Param("id")
+	response, err := services.GetCharacterById(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch character by id"})
+		return models.CharacterById{}, err
+	}
+	return response, nil
+}
